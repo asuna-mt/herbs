@@ -48,6 +48,16 @@ function hb.add_simple_flower(name, desc, box, f_groups)
 end
 
 function hb.register_mushroom(name, descript, tile, heal)
+		-- Determine mushroom edibility
+		local groups = {
+			mushroom = 1,
+			snappy = 3,
+			attached_node = 1,
+			flammable = 1,
+		}
+		if heal > 0 then
+			groups.food_mushroom = 1
+		end
 
     minetest.register_node(modname .. ":" .. name, {
         description = descript,
@@ -59,7 +69,7 @@ function hb.register_mushroom(name, descript, tile, heal)
         sunlight_propagates = true,
         walkable = false,
         buildable_to = true,
-        groups = {mushroom = 1, food_mushroom = 1, snappy = 3, attached_node = 1, flammable = 1},
+        groups = groups,
         sounds = default.node_sound_leaves_defaults(),
         on_use = minetest.item_eat(heal),
         selection_box = {
@@ -80,13 +90,13 @@ hb.flowerdatas = {
 		"trifolium_red",
 		S("Trifolium Red"),
 		{-4 / 16, -0.5, -4 / 16, 4 / 16, 5 / 16, 4 / 16},
-		{color_violet = 1, flammable = 1}
+		{color_pink = 1, flammable = 1}
 	},
 	{
 		"trifolium_white",
 		S("Trifolium White"),
 		{-4 / 16, -0.5, -4 / 16, 4 / 16, 3 / 16, 4 / 16},
-		{color_green = 1, flammable = 1}
+		{color_white = 1, flammable = 1}
 	},
 	{
 		"centaurea",
@@ -116,7 +126,7 @@ hb.flowerdatas = {
 		"leontopodium_white",
 		S("Leontopodium White"),
 		{-4 / 16, -0.5, -4 / 16, 4 / 16, 2 / 16, 4 / 16},
-		{color_grey = 1, flammable = 1}
+		{color_white = 1, flammable = 1}
 	},
 	{
 		"papaver_red",
@@ -138,7 +148,7 @@ hb.flowerdatas = {
 	},
 	{
 		"drosera",
-		S("Dosera round"),
+		S("Drosera Round"),
 		{-4 / 16, -0.5, -4 / 16, 4 / 16, 5 / 16, 4 / 16},
 		{color_red = 1, flammable = 1}
 	},
@@ -166,42 +176,42 @@ hb.mushroomdatas = {
                             S("Amanita Green"),
                             "mushroom_amanita_green.png",
                             1,
-                            -10
+                            -20
                         },
                         {
                             "mushroom_cantharellus",
                             S("Cantharellus"),
                             "mushroom_cantharellus.png",
                             3,
-                            0
+                            1
                         },
                         {
                             "mushroom_gyromitra",
                             S("Gyromitra"),
                             "mushroom_gyromitra.png",
                             1,
-                            -5
+                            -10
                         },
                         {
                             "mushroom_macrolepiota",
                             S("Macrolepiota"),
                             "mushroom_macrolepiota.png",
                             5,
-                            0
+                            1
                         },
                         {
                             "mushroom_galerina",
                             S("Galerina"),
                             "mushroom_galerina.png",
                             1,
-                            -3
+                            -5
                         },
                         {
                             "mushroom_boletus",
                             S("Boletus"),
                             "mushroom_boletus.png",
                             4,
-                            0
+                            1
                         }
                     }
 
@@ -209,7 +219,7 @@ for _, mushroom in pairs(hb.mushroomdatas) do
     hb.register_mushroom(mushroom[1],
                             mushroom[2],
                             mushroom[3],
-                            mushroom[4]
+                            mushroom[5]
                             )
 end
 
@@ -238,6 +248,8 @@ minetest.register_alias("herbs:mushroom_lorikeet","herbs:mushroom_gyromitra")
 minetest.register_alias("herbs:mushroom_parasol","herbs:mushroom_macrolepiota")
 minetest.register_alias("herbs:mushroom_poisonous_sublime","herbs:mushroom_galerina")
 minetest.register_alias("herbs:mushroom_stone","herbs:mushroom_boletus")
+
+minetest.register_alias("herbs:dosera","herbs:drosera")
 
 
 dofile(minetest.get_modpath(modname) .. "/register_mods.lua")

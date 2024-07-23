@@ -122,4 +122,4 @@ end
 --
 -- Detect mapgen to select functions
 --
-herbs.register_decorations()
+--herbs.register_decorations() -- removed, flowers and mushrooms will be placed via other mods
